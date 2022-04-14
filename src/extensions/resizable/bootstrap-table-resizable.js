@@ -69,7 +69,8 @@ const initResizable = that => {
 
       // FIXIT: This only applies to my current situation. You may need to modify it according to your situation
       that.$tableHeader.find('table').css('table-layout', 'fixed')
-    }, 2000)
+      that.$tableBorder.css('width', 'auto')
+    }, 1)
   }
 }
 
