@@ -81,12 +81,9 @@ const destroy = that => {
 }
 
 const reInitResizable = that => {
-  // FIXME: This only applies to my current situation. You may need to modify it according to your situation
-  that.$tableHeader.find('table').css('table-layout', 'auto')
+  that.$tableHeader.find('table').css('table-layout', that._oldTableLayout)
   destroy(that)
   initResizable(that)
-
-  // FIXME: This only applies to my current situation. You may need to modify it according to your situation
   that.$tableHeader.find('table').css('table-layout', 'fixed')
 }
 
@@ -114,9 +111,10 @@ const uuid = () => {
 
 $.BootstrapTable = class extends $.BootstrapTable {
 
-  constructor ($table, options) {
-    super($table, options)
+  constructor (table, options) {
+    super(table, options)
 
+    this._oldTableLayout = $(table).css('table-layout')
     /**
      * save the temp width data, when table refresh to restore
      */
@@ -150,8 +148,7 @@ $.BootstrapTable = class extends $.BootstrapTable {
       // because in fitHeader function, we use setTimeout(func, 100);
       setTimeout(() => {
         reInitResizable(this)
-        // FIXME: This only applies to my current situation. You may need to modify it according to your situation
-        this.$el.css('table-layout', 'auto')
+        this.$el.css('table-layout', this._oldTableLayout)
       }, 100)
     }
   }
